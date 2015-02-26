@@ -1,0 +1,30 @@
+{
+  "name": "native-api",
+  "version": "0.0.0",
+  "description": "Cross-platform OS API with native modules",
+  "main": "./lib/native-api.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nachos/native-api"
+  },
+  "keywords": [
+    "os",
+    "api",
+    "native"
+  ],
+  "author": "Nachos team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nachos/native-api/issues"
+  },
+  "homepage": "https://github.com/nachos/native-api",
+  "devDependencies": {
+    "gulp": "^3.8.11"
+  },
+  "dependencies": {
+    "bindings": "^1.2.1"
+  }
+}
