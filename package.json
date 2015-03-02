@@ -1,32 +1,42 @@
 {
   "name": "native-api",
+  "description": "Provides an abstraction layer over native apis for nachos.",
   "version": "0.0.0",
-  "description": "Cross-platform OS API with native modules",
-  "main": "./lib/native-api.js",
-  "scripts": {
-    "test": "gulp test"
+  "homepage": "https://github.com/nachos/native-api",
+  "bugs": "user/repo/issues",
+  "license": "MIT",
+  "main": "lib/native-api.js",
+  "author": {
+    "name": ""
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nachos/native-api"
+    "url": "user/repo"
   },
-  "keywords": [
-    "os",
-    "api",
-    "native"
-  ],
-  "author": "Nachos team",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nachos/native-api/issues"
-  },
-  "homepage": "https://github.com/nachos/native-api",
-  "devDependencies": {
-    "gulp": "^3.8.11",
-    "gulp-jshint": "^1.9.2",
-    "jshint-stylish": "^1.0.1"
-  },
+  "keywords": [],
   "dependencies": {
-    "bindings": "^1.2.1"
+    "bindings": "^1.2.1",
+    "chai": "^2.1.0",
+    "debug": "2.1.2",
+    "lodash": "3.3.1",
+    "q": "1.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "gulp-util": "^3.0.1",
+    "gulp-bump": "^0.1.11",
+    "gulp-jscs": "^1.1.2",
+    "gulp-jshint": "^1.8.4",
+    "gulp-mocha": "^1.1.0",
+    "gulp-istanbul": "^0.5.0",
+    "coveralls": "^2.11.1",
+    "should": "^4.0.4",
+    "jshint-stylish": "^0.4.0",
+    "gulp-load-plugins": "^0.6.0",
+    "gulp-plumber": "^0.6.5"
+  },
+  "scripts": {
+    "coveralls": "gulp test && cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "gulp test"
   }
 }

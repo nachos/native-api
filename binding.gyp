@@ -2,7 +2,7 @@
   "targets": [
     {
       "target_name": "process",
-      "sources": [ "src/process.cc" ]
+      "sources": [ "src/process/process.cc" ]
     }
   ]
 }
