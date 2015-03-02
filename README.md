@@ -1,5 +1,5 @@
 # native-api 
-[![NPM version][npm-image]][npm-url] [![Build Status](https://travis-ci.org/nachos/native-api.svg?branch=master)](https://travis-ci.org/nachos/native-api) [![Dependency Status][daviddm-url]][daviddm-image] [![Coverage Status][coveralls-image]][coveralls-url]
+[![NPM version][npm-image]][npm-url] [![Build Status][https://travis-ci.org/nachos/native-api.svg?branch=master]][https://travis-ci.org/nachos/native-api] [![Dependency Status][daviddm-url]][daviddm-image] [![Coverage Status][coveralls-image]][coveralls-url]
 
 Provides an abstraction layer over native apis for nachos.
 
