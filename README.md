@@ -16,8 +16,10 @@ $ npm install --save native-api
 ```javascript
 var nativeApi = require('native-api');
 var process = nativeApi.process;
+var file = nativeApi.file;
 
 var processes = process.getAllProcesses();
+var fileStats = file.getFileStats('c:\test.txt');
 ```
 
 ## API
