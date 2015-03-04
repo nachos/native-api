@@ -27,7 +27,6 @@ class File : ObjectWrap {
         HandleScope scope(isolate);
 
         Local<Object> returnObj = Object::New(isolate);
-        Local<Object> errorObj = Object::New(isolate);
 
         String::Utf8Value filePathV8(args[0]->ToString());
         const char* filePath = std::string(*filePathV8).c_str();
