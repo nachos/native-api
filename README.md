@@ -1,5 +1,5 @@
 # native-api 
-[![NPM version][npm-image]][npm-url] [![Build Status][https://travis-ci.org/nachos/native-api.svg?branch=master]][https://travis-ci.org/nachos/native-api] [![Dependency Status][daviddm-url]][daviddm-image] [![Coverage Status][coveralls-image]][coveralls-url]
+[![NPM version][npm-image]][npm-url] [![Build Status][https://travis-ci.org/nachos/native-api.svg?branch=master]][https://travis-ci.org/nachos/native-api] [![Coverage Status][coveralls-image]][coveralls-url]
 
 Provides an abstraction layer over native apis for nachos.
 
@@ -15,7 +15,9 @@ $ npm install --save native-api
 
 ```javascript
 var nativeApi = require('native-api');
-nativeApi(); // "awesome"
+var process = nativeApi.process;
+
+var processes = process.getAllProcesses();
 ```
 
 ## API
@@ -38,7 +40,5 @@ Copyright (c) 2015. Licensed under the MIT license.
 [npm-image]: https://badge.fury.io/js/native-api.svg
 [travis-url]: https://travis-ci.org/user/native-api
 [travis-image]: https://travis-ci.org/user/native-api.svg?branch=master
-[daviddm-url]: https://david-dm.org/user/native-api.svg?theme=shields.io
-[daviddm-image]: https://david-dm.org/user/native-api
 [coveralls-url]: https://coveralls.io/r/user/native-api
 [coveralls-image]: https://coveralls.io/repos/user/native-api/badge.png
