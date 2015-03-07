@@ -9,6 +9,15 @@ var _ = require('lodash');
 describe('file', function () {
 
   describe('getFileStats', function() {
+
+    before(function() {
+      // Set file attributes for the tests because git does not save file attributes
+      var exec = require('child_process').exec;
+      exec('attrib +S systemFile & attrib +R readOnly & attrib +H hidden & attrib -S -R -H normal', function (error) {
+        expect(error).to.not.exist;
+      });
+    });
+
     it('returns correct stats for a normal file', function () {
       var fileStats = file.getFileStats('./normal');
 
@@ -42,7 +51,7 @@ describe('file', function () {
     });
 
     it('returns correct stats for a system file', function () {
-      var fileStats = file.getFileStats("C:/Windows/System32/");
+      var fileStats = file.getFileStats("./systemFile");
 
       expect(fileStats).to.exist;
       expect(fileStats).to.not.have.property('error');
