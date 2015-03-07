@@ -5,6 +5,7 @@ var file = nativeApi.file;
 var chai = require('chai');
 var expect = chai.expect;
 var _ = require('lodash');
+var path = require('path');
 
 describe('file', function () {
 
@@ -13,8 +14,11 @@ describe('file', function () {
     before(function() {
       // Set file attributes for the tests because git does not save file attributes
       var exec = require('child_process').exec;
-      exec('attrib +S systemFile & attrib +R readOnly & attrib +H hidden & attrib -S -R -H normal', function (error) {
+      exec('cmd /c "cd '+ __dirname + ' & attrib +S systemFile & attrib +R readOnly & attrib +H hidden & attrib -S -R -H normal"', function (error) {
         expect(error).to.not.exist;
+        if (error) {
+          console.log("Attributes couldn't be set. The following tests might fail.")
+        }
       });
     });
 
