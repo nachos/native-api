@@ -1,5 +1,3 @@
-#pragma comment(lib, "psapi.lib")
-
 #include <node.h>
 #include <node_object_wrap.h>
 #include <v8.h>

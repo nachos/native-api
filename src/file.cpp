@@ -1,15 +1,11 @@
-#pragma comment(lib, "psapi.lib")
-
 #include <node.h>
-#include <node_object_wrap.h>
+#include <nan.h>
 #include <v8.h>
 
 #include <windows.h>
 
 #include <string>
 #include <stdio.h>
-
-#include <nan.h>
 
 using namespace v8;
 using namespace node;
