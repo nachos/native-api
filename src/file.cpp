@@ -9,6 +9,8 @@
 #include <string>
 #include <stdio.h>
 
+#include <nan.h>
+
 using namespace v8;
 using namespace node;
 
