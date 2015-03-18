@@ -1,4 +1,4 @@
-# native-api [![Build Status](https://travis-ci.org/nachos/native-api.svg?branch=master)](https://travis-ci.org/nachos/native-api)
+# native-api [![Build Status](https://travis-ci.org/nachos/native-api.svg?branch=master)](https://travis-ci.org/nachos/native-api)[![Build status](https://ci.appveyor.com/api/projects/status/vm8870gdn3c4j14b?svg=true)](https://ci.appveyor.com/project/noamokman/native-api)
 
 Cross-platform OS API with native modules.
 
