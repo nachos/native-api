@@ -1,22 +1,16 @@
 {
-  "curly": true,
+  "node": true,
+  "esnext": true,
+  "bitwise": true,
   "eqeqeq": true,
   "immed": true,
-  "latedef": true,
+  "latedef": "nofunc",
   "newcap": true,
   "noarg": true,
-  "sub": true,
+  "regexp": true,
   "undef": true,
   "unused": true,
-  "boss": true,
-  "eqnull": true,
-  "node": true,
-  "globals": {
-    "describe"   : false,
-    "it"         : false,
-    "before"     : false,
-    "beforeEach" : false,
-    "after"      : false,
-    "afterEach"  : false
-  }
+  "smarttabs": true,
+  "asi": true,
+  "debug": true
 }

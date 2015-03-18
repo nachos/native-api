@@ -2,11 +2,11 @@
   "targets": [
     {
       "target_name": "process",
-      "sources": [ "src/process/process.cc" ]
+      "sources": [ "src/process.cpp" ]
     },
     {
       "target_name": "file",
-      "sources": [ "src/file/file.cc" ]
+      "sources": [ "src/file.cpp" ]
     }
   ]
 }

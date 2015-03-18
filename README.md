@@ -1,7 +1,6 @@
-# native-api 
-[![NPM version][npm-image]][npm-url] [![Build Status](https://travis-ci.org/nachos/native-api.svg?branch=master)](https://travis-ci.org/nachos/native-api) [![Coverage Status][coveralls-image]][coveralls-url]
+# native-api [![Build Status](https://travis-ci.org/nachos/native-api.svg?branch=master)](https://travis-ci.org/nachos/native-api)
 
-Provides an abstraction layer over native apis for nachos.
+Cross-platform OS API with native modules.
 
 
 ## Install
@@ -35,12 +34,3 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 ## License
 
 Copyright (c) 2015. Licensed under the MIT license.
-
-
-
-[npm-url]: https://npmjs.org/package/native-api
-[npm-image]: https://badge.fury.io/js/native-api.svg
-[travis-url]: https://travis-ci.org/user/native-api
-[travis-image]: https://travis-ci.org/user/native-api.svg?branch=master
-[coveralls-url]: https://coveralls.io/r/user/native-api
-[coveralls-image]: https://coveralls.io/repos/user/native-api/badge.png
