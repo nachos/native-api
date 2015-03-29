@@ -16,9 +16,13 @@ $ npm install --save native-api
 var nativeApi = require('native-api');
 var process = nativeApi.process;
 var file = nativeApi.file;
+var path = nativeApi.path;
+var screen = nativeApi.screen;
 
 var processes = process.getAllProcesses();
 var fileStats = file.getFileStats('c:\test.txt');
+var userHome = path.getUserHome();
+var screens = screen.getAllScreens();
 ```
 
 ## API
