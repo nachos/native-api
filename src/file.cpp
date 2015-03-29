@@ -1,20 +1,14 @@
-#include <node.h>
 #include <nan.h>
-#include <v8.h>
 
 #include <windows.h>
-
-#include <string>
-#include <stdio.h>
 
 using namespace v8;
 using namespace node;
 
-void GetFileStats(const FunctionCallbackInfo<Value>& args) {
-  Isolate* isolate = Isolate::GetCurrent();
-  HandleScope scope(isolate);
+NAN_METHOD(GetFileStats) {
+  NanScope();
 
-  Local<Object> returnObj = Object::New(isolate);
+  Local<Object> returnObj = NanNew<Object>();
 
   String::Utf8Value filePathV8(args[0]->ToString());
   const char* filePath = std::string(*filePathV8).c_str();
@@ -22,7 +16,7 @@ void GetFileStats(const FunctionCallbackInfo<Value>& args) {
   int fileAttributes = GetFileAttributes(filePath);
   int lastError = GetLastError();
 
-  returnObj->Set(String::NewFromUtf8(isolate, "errorCode"), Number::New(isolate, lastError));
+  returnObj->Set(NanNew<String>("errorCode"), NanNew<Number>(lastError));
 
   if (lastError == 0) {
     bool isNormal = false, isHidden = false, isReadOnly = false, isSystem = false, isDirectory = false, isArchive = false;
@@ -51,19 +45,20 @@ void GetFileStats(const FunctionCallbackInfo<Value>& args) {
       isDirectory = true;
     }
 
-    returnObj->Set(String::NewFromUtf8(isolate, "isNormal"), Boolean::New(isolate, isNormal));
-    returnObj->Set(String::NewFromUtf8(isolate, "isArchive"), Boolean::New(isolate, isArchive));
-    returnObj->Set(String::NewFromUtf8(isolate, "isHidden"), Boolean::New(isolate, isHidden));
-    returnObj->Set(String::NewFromUtf8(isolate, "isSystem"), Boolean::New(isolate, isSystem));
-    returnObj->Set(String::NewFromUtf8(isolate, "isReadOnly"), Boolean::New(isolate, isReadOnly));
-    returnObj->Set(String::NewFromUtf8(isolate, "isDirectory"), Boolean::New(isolate, isDirectory));
+    returnObj->Set(NanNew<String>("isNormal"), NanNew<Boolean>(isNormal));
+    returnObj->Set(NanNew<String>("isArchive"), NanNew<Boolean>(isArchive));
+    returnObj->Set(NanNew<String>("isHidden"), NanNew<Boolean>(isHidden));
+    returnObj->Set(NanNew<String>("isSystem"), NanNew<Boolean>(isSystem));
+    returnObj->Set(NanNew<String>("isReadOnly"), NanNew<Boolean>(isReadOnly));
+    returnObj->Set(NanNew<String>("isDirectory"), NanNew<Boolean>(isDirectory));
   }
 
-  args.GetReturnValue().Set(returnObj);
+  NanReturnValue(returnObj);
 }
 
 void init(Handle<Object> exports) {
-  NODE_SET_METHOD(exports, "getFileStats", GetFileStats);
+  exports->Set(NanNew<String>("getFileStats"),
+    NanNew<FunctionTemplate>(GetFileStats)->GetFunction());
 }
 
 NODE_MODULE(file, init)
