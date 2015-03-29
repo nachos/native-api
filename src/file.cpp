@@ -2,8 +2,13 @@
 
 #include <windows.h>
 
-using namespace v8;
-using namespace node;
+using v8::FunctionTemplate;
+using v8::Handle;
+using v8::Object;
+using v8::String;
+using v8::Boolean;
+using v8::Number;
+using v8::Local;
 
 NAN_METHOD(GetFileStats) {
   NanScope();
