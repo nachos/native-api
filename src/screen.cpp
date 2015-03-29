@@ -1,8 +1,4 @@
-#include <node.h>
 #include <nan.h>
-#include <v8.h>
-
-#include <uv.h>
 
 #include <windows.h>
 #include <tlhelp32.h>
@@ -49,7 +45,7 @@ BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMoni
   return TRUE;
 }
 
-void GetAllScreens(const FunctionCallbackInfo<Value>& args) {
+NAN_METHOD(GetAllScreens) {
   NanScope();
 
   std::list<Local<Object>> screens;
