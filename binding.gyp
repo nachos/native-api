@@ -14,6 +14,11 @@
       "target_name": "screen",
       "sources": ["src/screen.cpp"],
       "include_dirs": ["<!(node -e \"require('nan')\")"]
+    },
+    {
+      "target_name": "window",
+      "sources": ["src/window.cpp"],
+      "include_dirs": ["<!(node -e \"require('nan')\")"]
     }
   ]
 }

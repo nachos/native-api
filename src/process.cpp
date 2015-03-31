@@ -1,8 +1,12 @@
+#pragma comment(lib, "psapi.lib")
+
 #include <nan.h>
 
 #include <windows.h>
+#include <winbase.h>
 #include <tlhelp32.h>
 
+#include <tchar.h>
 #include <psapi.h>
 
 using namespace v8;
@@ -50,14 +54,25 @@ NAN_METHOD(GetAllProcesses) {
     Local<Object> current = NanNew<Object>();
 
     current->Set(NanNew<String>("name"), NanNew<String>(pe32.szExeFile));
+    current->Set(NanNew<String>("processID"), NanNew<Number>((unsigned int)pe32.th32ProcessID));
+    //current->Set(NanNew<String>("parentProcessID"), NanNew<Number>((unsigned int)pe32.th32ParentProcessID));
+    //current->Set(NanNew<String>("moduleID"), NanNew<Number>((unsigned int)pe32.th32ModuleID));
+
     /*curr->Set(String::NewFromUtf8(isolate, "cntUsage"), Integer::New(isolate, pe32.cntUsage));
-    curr->Set(String::NewFromUtf8(isolate, "th32ProcessID"), Integer::New(isolate, pe32.th32ProcessID));
     curr->Set(String::NewFromUtf8(isolate, "th32DefaultHeapID"), Integer::New(isolate, pe32.th32DefaultHeapID));
     curr->Set(String::NewFromUtf8(isolate, "th32ModuleID"), Integer::New(isolate, pe32.th32ModuleID));
     curr->Set(String::NewFromUtf8(isolate, "cntThreads"), Integer::New(isolate, pe32.cntThreads));
     curr->Set(String::NewFromUtf8(isolate, "th32ParentProcessID"), Integer::New(isolate, pe32.th32ParentProcessID));
     curr->Set(String::NewFromUtf8(isolate, "pcPriClassBase"), Integer::New(isolate, pe32.pcPriClassBase));
     curr->Set(String::NewFromUtf8(isolate, "dwFlags"), Integer::New(isolate, pe32.dwFlags));*/
+
+    HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pe32.th32ProcessID);
+    char processFile[1024];
+    GetModuleFileNameEx(hProcess, NULL, processFile, 1024);
+
+    current->Set(NanNew<String>("processFile"), NanNew<String>(processFile));
+
+    CloseHandle(hProcess);
 
     processes->Set(NanNew<Number>(i++), current);
   } while(Process32Next(hProcessSnap, &pe32));
