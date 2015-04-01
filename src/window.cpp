@@ -82,12 +82,90 @@ NAN_METHOD(GetWindowTitle) {
   //NanReturnValue(NanNew(*NanAsciiString(title)));
 }
 
+NAN_METHOD(Minimize) {
+  NanScope();
+
+  HWND hwnd = (HWND)args[0]->Uint32Value();
+
+  ShowWindow(hwnd, 6);
+}
+
+NAN_METHOD(Maximize) {
+  NanScope();
+
+  HWND hwnd = (HWND)args[0]->Uint32Value();
+
+  ShowWindow(hwnd, 3);
+}
+
+NAN_METHOD(IsForeground) {
+  NanScope();
+
+  HWND hwnd = (HWND)args[0]->Uint32Value();
+
+  NanReturnValue(GetForegroundWindow() == hwnd ? NanTrue() : NanFalse());
+}
+
+NAN_METHOD(IsMinimized) {
+  NanScope();
+
+  HWND hwnd = (HWND)args[0]->Uint32Value();
+
+  NanReturnValue(IsIconic(hwnd) ? NanTrue() : NanFalse());
+}
+
+NAN_METHOD(SetTopMost) {
+  NanScope();
+
+  HWND hwnd = (HWND)args[0]->Uint32Value();
+
+  SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE);
+}
+
+NAN_METHOD(Close) {
+  NanScope();
+
+  HWND hwnd = (HWND)args[0]->Uint32Value();
+
+  ShowWindow(hwnd, 0);
+}
+
+NAN_METHOD(SetToForeground) {
+  NanScope();
+
+  HWND hwnd = (HWND)args[0]->Uint32Value();
+
+  ShowWindow(hwnd, 4);
+  SetForegroundWindow(hwnd);
+}
+
 void init(Handle<Object> exports) {
   exports->Set(NanNew<String>("getAllWindows"),
     NanNew<FunctionTemplate>(GetAllWindows)->GetFunction());
 
   exports->Set(NanNew<String>("getWindowTitle"),
     NanNew<FunctionTemplate>(GetWindowTitle)->GetFunction());
+
+  exports->Set(NanNew<String>("setToForeground"),
+    NanNew<FunctionTemplate>(SetToForeground)->GetFunction());
+
+  exports->Set(NanNew<String>("minimize"),
+    NanNew<FunctionTemplate>(Minimize)->GetFunction());
+
+  exports->Set(NanNew<String>("maximize"),
+      NanNew<FunctionTemplate>(Maximize)->GetFunction());
+
+  exports->Set(NanNew<String>("isForeground"),
+      NanNew<FunctionTemplate>(IsForeground)->GetFunction());
+
+  exports->Set(NanNew<String>("isMinimized"),
+      NanNew<FunctionTemplate>(IsMinimized)->GetFunction());
+
+  exports->Set(NanNew<String>("setTopMost"),
+        NanNew<FunctionTemplate>(SetTopMost)->GetFunction());
+
+  exports->Set(NanNew<String>("close"),
+          NanNew<FunctionTemplate>(Close)->GetFunction());
 }
 
 NODE_MODULE(window, init)
