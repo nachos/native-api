@@ -19,11 +19,18 @@ NAN_METHOD(GetFileStats) {
   const char* filePath = std::string(*filePathV8).c_str();
 
   int fileAttributes = GetFileAttributes(filePath);
-  int lastError = GetLastError();
 
-  returnObj->Set(NanNew<String>("errorCode"), NanNew<Number>(lastError));
+  if (fileAttributes == INVALID_FILE_ATTRIBUTES) {
+    int lastError = GetLastError();
 
-  if (lastError == 0) {
+    LPWSTR lpMsg = NULL;
+    FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_ALLOCATE_BUFFER, NULL, lastError, 0, (LPWSTR)&lpMsg, 0, NULL);
+    char msg[1024];
+    wcstombs(msg, lpMsg, 1024);
+
+    returnObj->Set(NanNew<String>("errorCode"), NanNew<Number>(lastError));
+    returnObj->Set(NanNew<String>("error"), NanNew<String>(msg));
+  } else {
     bool isNormal = false, isHidden = false, isReadOnly = false, isSystem = false, isDirectory = false, isArchive = false;
 
     if ((fileAttributes & FILE_ATTRIBUTE_NORMAL) != 0){

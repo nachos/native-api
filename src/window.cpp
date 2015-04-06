@@ -10,6 +10,9 @@
 #include <psapi.h>
 #include <string>
 
+
+//#include <windowsx.h>
+
 #include <vector>
 
 using namespace v8;
@@ -139,6 +142,43 @@ NAN_METHOD(SetToForeground) {
   SetForegroundWindow(hwnd);
 }
 
+HHOOK hHook;
+
+LRESULT CALLBACK DisableZWindowProc(int nCode, WPARAM wParam, LPARAM lParam) {
+  if (nCode >= 0) {
+      // the action is valid: HC_ACTION.
+      if (wParam != 0) {
+        // lParam is the pointer to the struct containing the data needed, so cast and assign it to kdbStruct.
+        CWPSTRUCT cwpStruct = *((CWPSTRUCT*)lParam);
+        // a key (non-system) is pressed.
+        if (cwpStruct.message == WM_WINDOWPOSCHANGING) {
+            // F1 is pressed!
+          MessageBox(NULL, "F1 is pressed!", "key pressed", MB_ICONINFORMATION);
+        }
+      }
+  }
+  MessageBox(NULL, "F1 is pressed!", "key pressed", MB_ICONINFORMATION);
+  // call the next hook in the hook chain. This is nessecary or your hook chain will break and the hook stops
+  return CallNextHookEx(hHook, nCode, wParam, lParam);
+}
+
+NAN_METHOD(DisableZIndexChange) {
+  NanScope();
+
+  HWND hwnd = (HWND)args[0]->Uint32Value();
+  DWORD windowThread = GetWindowThreadProcessId(hwnd, NULL);
+
+  HINSTANCE hInstance = GetModuleHandle(NULL);
+
+  HHOOK result = SetWindowsHookEx(WH_CALLWNDPROC, DisableZWindowProc, hInstance, windowThread);
+
+  if (result == NULL) {
+    NanReturnValue(NanNew<Number>((unsigned int)GetLastError()));
+  } else {
+    NanReturnValue(NanNew<Number>((unsigned int)result));
+  }
+}
+
 void init(Handle<Object> exports) {
   exports->Set(NanNew<String>("getAllWindows"),
     NanNew<FunctionTemplate>(GetAllWindows)->GetFunction());
@@ -153,19 +193,22 @@ void init(Handle<Object> exports) {
     NanNew<FunctionTemplate>(Minimize)->GetFunction());
 
   exports->Set(NanNew<String>("maximize"),
-      NanNew<FunctionTemplate>(Maximize)->GetFunction());
+    NanNew<FunctionTemplate>(Maximize)->GetFunction());
 
   exports->Set(NanNew<String>("isForeground"),
-      NanNew<FunctionTemplate>(IsForeground)->GetFunction());
+    NanNew<FunctionTemplate>(IsForeground)->GetFunction());
 
   exports->Set(NanNew<String>("isMinimized"),
-      NanNew<FunctionTemplate>(IsMinimized)->GetFunction());
+    NanNew<FunctionTemplate>(IsMinimized)->GetFunction());
 
   exports->Set(NanNew<String>("setTopMost"),
-        NanNew<FunctionTemplate>(SetTopMost)->GetFunction());
+    NanNew<FunctionTemplate>(SetTopMost)->GetFunction());
 
   exports->Set(NanNew<String>("close"),
-          NanNew<FunctionTemplate>(Close)->GetFunction());
+    NanNew<FunctionTemplate>(Close)->GetFunction());
+
+  exports->Set(NanNew<String>("disableZIndexChange"),
+    NanNew<FunctionTemplate>(DisableZIndexChange)->GetFunction());
 }
 
 NODE_MODULE(window, init)
