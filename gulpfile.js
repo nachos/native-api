@@ -49,5 +49,5 @@ gulp.task('jshint:all', ['jshint', 'jshint:test', 'jshint:gulpfile']);
 
 gulp.task('mocha', function() {
   return gulp.src(paths.test, { read: false })
-    .pipe(mocha({ reporter: 'spec' }));
+    .pipe(mocha({ reporter: 'nyan' }));
 });
