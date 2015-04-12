@@ -55,7 +55,7 @@ NAN_METHOD(GetAllProcesses) {
 
     current->Set(NanNew<String>("name"), NanNew<String>(pe32.szExeFile));
     current->Set(NanNew<String>("processID"), NanNew<Number>((unsigned int)pe32.th32ProcessID));
-    //current->Set(NanNew<String>("parentProcessID"), NanNew<Number>((unsigned int)pe32.th32ParentProcessID));
+    current->Set(NanNew<String>("parentProcessID"), NanNew<Number>((unsigned int)pe32.th32ParentProcessID));
     //current->Set(NanNew<String>("moduleID"), NanNew<Number>((unsigned int)pe32.th32ModuleID));
 
     /*curr->Set(String::NewFromUtf8(isolate, "cntUsage"), Integer::New(isolate, pe32.cntUsage));
