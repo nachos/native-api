@@ -112,7 +112,15 @@ NAN_METHOD(Minimize) {
 
   HWND hwnd = (HWND)args[0]->Uint32Value();
 
-  ShowWindow(hwnd, 6);
+  ShowWindow(hwnd, SW_MINIMIZE);
+}
+
+NAN_METHOD(Show) {
+  NanScope();
+
+  HWND hwnd = (HWND)args[0]->Uint32Value();
+
+  ShowWindow(hwnd, SW_SHOW);
 }
 
 NAN_METHOD(Maximize) {
@@ -120,7 +128,7 @@ NAN_METHOD(Maximize) {
 
   HWND hwnd = (HWND)args[0]->Uint32Value();
 
-  ShowWindow(hwnd, 3);
+  ShowWindow(hwnd, SW_MAXIMIZE);
 }
 
 NAN_METHOD(IsForeground) {
@@ -152,7 +160,15 @@ NAN_METHOD(Close) {
 
   HWND hwnd = (HWND)args[0]->Uint32Value();
 
-  ShowWindow(hwnd, 0);
+  ShowWindow(hwnd, SW_HIDE);
+}
+
+NAN_METHOD(Restore) {
+  NanScope();
+
+  HWND hwnd = (HWND)args[0]->Uint32Value();
+
+  ShowWindow(hwnd, SW_RESTORE);
 }
 
 NAN_METHOD(SetToForeground) {
@@ -162,6 +178,32 @@ NAN_METHOD(SetToForeground) {
 
   ShowWindow(hwnd, 4);
   SetForegroundWindow(hwnd);
+}
+
+NAN_METHOD(Activate) {
+  NanScope();
+
+  HWND hwnd = (HWND)args[0]->Uint32Value();
+  int result;
+
+  if (hwnd != GetForegroundWindow()) {
+    DWORD lForeThreadID = GetWindowThreadProcessId(GetForegroundWindow(), NULL);
+    DWORD lThisThreadID = GetWindowThreadProcessId(hwnd, NULL);
+
+    if (lForeThreadID != lThisThreadID) {
+      AttachThreadInput(lForeThreadID, lThisThreadID, TRUE);
+      result = SetForegroundWindow(hwnd);
+      AttachThreadInput(lForeThreadID, lThisThreadID, FALSE);
+    } else {
+      result = SetForegroundWindow(hwnd);
+    }
+
+    if (IsIconic(hwnd)) {
+      ShowWindow(hwnd, SW_RESTORE);
+    } else {
+      ShowWindow(hwnd, SW_SHOW);
+    }
+  }
 }
 
 LRESULT CALLBACK DisableZWindowProc(int nCode, WPARAM wParam, LPARAM lParam) {
@@ -298,6 +340,15 @@ void init(Handle<Object> exports) {
 
   exports->Set(NanNew<String>("minimize"),
     NanNew<FunctionTemplate>(Minimize)->GetFunction());
+
+  exports->Set(NanNew<String>("activate"),
+    NanNew<FunctionTemplate>(Activate)->GetFunction());
+
+  exports->Set(NanNew<String>("restore"),
+    NanNew<FunctionTemplate>(Restore)->GetFunction());
+
+  exports->Set(NanNew<String>("show"),
+    NanNew<FunctionTemplate>(Show)->GetFunction());
 
   exports->Set(NanNew<String>("maximize"),
     NanNew<FunctionTemplate>(Maximize)->GetFunction());
