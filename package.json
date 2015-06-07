@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/nachos/native-api",
   "devDependencies": {
-    "async": "^0.9.0",
     "chai": "^2.1.1",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
